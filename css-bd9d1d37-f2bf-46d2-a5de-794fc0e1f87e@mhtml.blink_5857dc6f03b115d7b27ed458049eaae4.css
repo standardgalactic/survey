@@ -1,0 +1,11 @@
+@charset "utf-8";
+
+.react-scroll-to-bottom--css-uacmt-79elbk { position: relative; }
+
+.react-scroll-to-bottom--css-uacmt-1n7m0yu { height: 100%; overflow-y: auto; width: 100%; }
+
+.react-scroll-to-bottom--css-uacmt-1tj0vk3 { background-color: rgba(0, 0, 0, 0.2); border-radius: 10px; border-width: 0px; bottom: 5px; cursor: pointer; height: 20px; outline: 0px; position: absolute; right: 20px; width: 20px; }
+
+.react-scroll-to-bottom--css-uacmt-1tj0vk3:hover { background-color: rgba(0, 0, 0, 0.4); }
+
+.react-scroll-to-bottom--css-uacmt-1tj0vk3:active { background-color: rgba(0, 0, 0, 0.6); }
