@@ -16,15 +16,12 @@ jobs:
 
       - name: Reset Submission
         run: |
-          const fs = require("fs");
-          const path = require("path");
+          EMAIL="${{ github.event.inputs.email }}"
+          FILE_PATH="responses/${EMAIL}.json"
 
-          const email = "${{ github.event.inputs.email }}";
-          const filePath = path.join(__dirname, 'responses', `${email}.json`);
-
-          if (fs.existsSync(filePath)) {
-            fs.unlinkSync(filePath);
-            console.log("Submission reset successfully.");
-          } else {
-            console.log("No submission found for this email.");
-          }
+          if [ -f "$FILE_PATH" ]; then
+            rm "$FILE_PATH"
+            echo "Submission reset successfully."
+          else
+            echo "No submission found for this email."
+          fi
