@@ -1,0 +1,30 @@
+name: Reset Submission
+
+on:
+  workflow_dispatch:
+    inputs:
+      email:
+        description: 'Email to reset submission'
+        required: true
+
+jobs:
+  reset_submission:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v2
+
+      - name: Reset Submission
+        run: |
+          const fs = require("fs");
+          const path = require("path");
+
+          const email = "${{ github.event.inputs.email }}";
+          const filePath = path.join(__dirname, 'responses', `${email}.json`);
+
+          if (fs.existsSync(filePath)) {
+            fs.unlinkSync(filePath);
+            console.log("Submission reset successfully.");
+          } else {
+            console.log("No submission found for this email.");
+          }

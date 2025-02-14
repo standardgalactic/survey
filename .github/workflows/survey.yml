@@ -23,10 +23,11 @@ jobs:
         run: |
           const nodemailer = require("nodemailer");
           const fs = require("fs");
+          const path = require("path");
           
           const data = process.env.DATA ? JSON.parse(process.env.DATA) : {};
           const email = data.email;
-          const filePath = `responses/${email}.json`;
+          const filePath = path.join(__dirname, 'responses', `${email}.json`);
 
           if (fs.existsSync(filePath)) {
             console.log("Error: Survey already submitted.");
