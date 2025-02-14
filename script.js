@@ -25,7 +25,7 @@ document.getElementById("surveyForm").addEventListener("submit", function(event)
     .then(response => response.json())
     .then(response => {
         document.body.classList.remove("glitch");
-        if (response.error) {
+        if (response.message) {
             document.getElementById("status").textContent = "Sorry, you have already submitted a response.";
         } else {
             document.getElementById("status").textContent = "Survey submitted! Thank you for participating.";

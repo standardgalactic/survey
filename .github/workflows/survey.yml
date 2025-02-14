@@ -38,8 +38,8 @@ jobs:
           const transporter = nodemailer.createTransport({
             service: "Gmail",
             auth: {
-              user: "your-email@gmail.com",
-              pass: "your-email-password"
+              user: process.env.EMAIL_USER,
+              pass: process.env.EMAIL_PASS
             }
           });
 
@@ -60,7 +60,7 @@ jobs:
             `Rationale:\n${rationale}`;
 
           transporter.sendMail({
-            from: "your-email@gmail.com",
+            from: process.env.EMAIL_USER,
             to: "standardgalactic@protonmail.com",
             subject: subject,
             text: message,
@@ -74,3 +74,5 @@ jobs:
           });
         env:
           DATA: ${{ toJson(github.event.client_payload) }}
+          EMAIL_USER: ${{ secrets.EMAIL_USER }}
+          EMAIL_PASS: ${{ secrets.EMAIL_PASS }}
