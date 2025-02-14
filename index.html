@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SGA Encounter Survey</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="terminal">
+        <h1>SGA & Enchanting Table Script Survey</h1>
+        <p>We’re trying to estimate how many people have encountered the Standard Galactic Alphabet (SGA) or the Minecraft Enchanting Table script. We think it’s around **750 million**—what do you think?</p>
+        
+        <form id="surveyForm">
+            <label><input type="checkbox" name="minecraft"> Have you played Minecraft?</label>
+            <label><input type="checkbox" name="keen"> Have you played Commander Keen?</label>
+            <label><input type="checkbox" name="minesweeper"> Have you played Minesweeper?</label>
+            <label>
+                Recognize the Enchanting Table script but never played Minecraft?
+                <input type="checkbox" name="sgaOnly">
+            </label>
+
+            <label>Estimate how many people have encountered it:
+                <input type="number" name="estimate" min="1000000" max="1000000000" step="1000000" value="750000000">
+            </label>
+
+            <label>Show your work (explain your reasoning):
+                <textarea name="rationale" rows="4" placeholder="Explain your estimate..."></textarea>
+            </label>
+
+            <label>Your Email:
+                <input type="email" name="email" required>
+            </label>
+
+            <button type="submit">Submit</button>
+        </form>
+
+        <p id="status"></p>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

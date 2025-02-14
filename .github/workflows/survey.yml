@@ -1,0 +1,76 @@
+name: Survey Submission
+
+on:
+  repository_dispatch:
+    types: [survey_submission]
+
+jobs:
+  send_email:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v2
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '14'
+
+      - name: Install dependencies
+        run: npm install nodemailer
+
+      - name: Send Survey Email
+        run: |
+          const nodemailer = require("nodemailer");
+          const fs = require("fs");
+          
+          const data = process.env.DATA ? JSON.parse(process.env.DATA) : {};
+          const email = data.email;
+          const filePath = `responses/${email}.json`;
+
+          if (fs.existsSync(filePath)) {
+            console.log("Error: Survey already submitted.");
+            process.exit(1);
+          }
+
+          fs.writeFileSync(filePath, JSON.stringify(data));
+
+          const transporter = nodemailer.createTransport({
+            service: "Gmail",
+            auth: {
+              user: "your-email@gmail.com",
+              pass: "your-email-password"
+            }
+          });
+
+          const { minecraft, keen, minesweeper, estimate, rationale, sgaOnly } = data;
+
+          let subject = "SGA Encounter Survey Response";
+          if (minecraft && keen) subject = "You've played Keen & Minecraft – You're a legend!";
+          else if (minecraft) subject = "Minecraft player detected!";
+          else if (keen) subject = "Commander Keen nostalgia trip!";
+          else if (sgaOnly) subject = "SGA is in your DNA!";
+
+          let message = `Survey response:\n\n` +
+            `- Minecraft: ${minecraft}\n` +
+            `- Commander Keen: ${keen}\n` +
+            `- Minesweeper: ${minesweeper}\n` +
+            `- Recognizes SGA but not Minecraft: ${sgaOnly}\n` +
+            `- Estimated number of encounters: ${estimate}\n\n` +
+            `Rationale:\n${rationale}`;
+
+          transporter.sendMail({
+            from: "your-email@gmail.com",
+            to: "standardgalactic@protonmail.com",
+            subject: subject,
+            text: message,
+          }, (err) => {
+            if (err) {
+              console.error(err);
+              process.exit(1);
+            } else {
+              console.log("Survey submitted successfully.");
+            }
+          });
+        env:
+          DATA: ${{ toJson(github.event.client_payload) }}
